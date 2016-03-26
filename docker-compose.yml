@@ -5,6 +5,11 @@ services:
     ports:
         - "80:80"
     build: ./nginx
-    #volumes:
-          #-  ./static:/usr/share/nginx/html
-          #-  ./conf:/etc/nginx/conf.d
+    links:
+        - django_server
+    depends_on: 
+        - django_server
+  django_server:
+    build: ./docker_server
+    expose: 
+        - "8000"
