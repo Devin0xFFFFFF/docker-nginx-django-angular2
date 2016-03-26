@@ -13,3 +13,4 @@ services:
     build: ./django_server
     expose: 
         - "8000"
+    #command: "./docker-entrypoint.sh"
