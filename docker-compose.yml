@@ -6,7 +6,7 @@ services:
         - "80:80"
     build: ./nginx
     links:
-        - django_server
+        - django_server:web
     depends_on: 
         - django_server
   django_server:
