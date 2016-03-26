@@ -10,6 +10,6 @@ services:
     depends_on: 
         - django_server
   django_server:
-    build: ./docker_server
+    build: ./django_server
     expose: 
         - "8000"
