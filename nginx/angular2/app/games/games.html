@@ -1,0 +1,8 @@
+<my-game-detail [target_game]="selectedGame"></my-game-detail>
+<ul class="games">
+    <li *ngFor="#game of games"
+        (click)="select(game)"
+        [class.selected]="game === selectedGame">
+        <span class="badge">{{game.id}}</span> {{game.name}}
+    </li>
+</ul>
