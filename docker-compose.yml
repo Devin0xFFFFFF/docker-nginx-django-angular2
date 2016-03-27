@@ -1,16 +1,24 @@
 version: '2'
 services:
   nginx:
-    image: nginx
     ports:
         - "80:80"
     build: ./nginx
     links:
         - django_server:web
-    depends_on: 
-        - django_server
+    volumes_from:
+        - angular2
+  angular2:
+    build: ./angular2
+    entrypoint: "true"
+    volumes:
+        - /usr/share/nginx/angular2
   django_server:
     build: ./django_server
     expose: 
         - "8000"
+    links:
+        - redis:redis
+  redis:
+    image: redis
     #command: "./docker-entrypoint.sh"
