@@ -1,4 +1,7 @@
 # Install with: `pip install -r requirements.txt`
 
 # Infrastructure
-Django >= 1.8.11, < 1.10
+Django >= 1.9.4
+
+#Testing
+#fake-factory >= 0.5.7
