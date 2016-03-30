@@ -1,1 +1,5 @@
-Hello World
+<li *ngFor="#tweet of feed">
+    {{ tweet }}
+</li>
+<input #nameInput [value]="'bob'">
+<button (click)="requestTweet(nameInput.value)">Get Tweet</button>

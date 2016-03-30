@@ -3,8 +3,8 @@ import {TwitterFeedComponent} from "./tweets/twitter_feed.component";
 
 @Component({
     selector: 'my-app',
-    templateUrl: 'app.component.html',
-    directives: [],
+    templateUrl: 'app/app_component.html',
+    directives: [TwitterFeedComponent],
     providers: []
 })
 export class AppComponent

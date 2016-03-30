@@ -9,14 +9,14 @@ import {Observable}     from 'rxjs/Observable';
 export class TweetService
 {
     tweetUrl = "http://thatcan.be/lib/get_tweets.php?";
+    numTweets = 200;
 
     constructor(private http: Http){}
 
     getTweet(name: String)
     {
-        var fullTweetUrl = this.tweetUrl + "username=" + name + "&ntweets=200";
-        return this.http.get(fullTweetUrl).map(result => result.json())
-            .catch(this.handleError);
+        var fullTweetUrl = this.tweetUrl + "username=" + name + "&ntweets=" + this.numTweets;
+        return this.http.get(fullTweetUrl);
     }
 
     private handleError (error: Response) {
