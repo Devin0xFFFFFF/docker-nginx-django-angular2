@@ -1,6 +1,22 @@
 docker exec -it dockernginx_nginx_1 bash
 
-Currently run npm install in host
+Currently run npm install in  ./angular2 on host
+Also run python manage.py migrate in ./django_server
+python manage.py makemigrations django_server_app
+
+By running makemigrations, you’re telling Django that you’ve made some changes to your models (in this case, you’ve made new ones) and that you’d like the changes to be stored as a migration.
+
+python manage.py sqlmigrate django_server_app 0001
+
+The sqlmigrate command doesn’t actually run the migration on your database - it just prints it to the screen so that you can see what SQL Django thinks is required. 
+It’s useful for checking what Django is going to do or if you have database administrators who require SQL scripts for changes.
+
+python manage.py check
+
+Checks for any problems in your project without making migrations or touching the database.
+
+Default superuser: (python manage.py createsuperuser)
+devin, admin@example.com, 111111
 
 RUN apt-get update && apt-get install -y \
 build-essential \
