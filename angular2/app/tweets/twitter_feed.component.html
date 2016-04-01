@@ -1,5 +1,15 @@
-<li *ngFor="#tweet of feed">
-    {{ tweet }}
-</li>
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="#tweet of feed">
+        {{ tweet }}<button class="pull-right btn btn-default" (click)="saveTweet(nameInput.value, tweet)">Save</button>
+    </li>
+</ul>
 <input #nameInput [value]="'bob'">
-<button (click)="requestTweet(nameInput.value)">Get Tweet</button>
+<button class="btn btn-default" (click)="requestTweet(nameInput.value)">Get Tweet</button>
+
+<h1>[{{get_token()}}]</h1>
+
+<ul class="list-group">
+    <li class="list-group-item" *ngFor="#tweet of savedTweets">
+        {{ tweet }}
+    </li>
+</ul>

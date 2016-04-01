@@ -18,13 +18,21 @@ export class TwitterFeedComponent implements OnInit, DoCheck
     feed: String[];
     errorMessage: String;
 
+    savedTweets: String[];
+
     constructor(private _tweetService: TweetService)
     {
-        this.feed = ["1fds", "2sdf"];
+        this.feed = [];
+        this.savedTweets = [];
+    }
+
+    get_token()
+    {
+        return this._tweetService.csrf_token;
     }
 
     ngOnInit():any {
-        // this.getHeroes();
+        this.getSavedTweets();
     }
 
     ngDoCheck():any {
@@ -45,5 +53,24 @@ export class TwitterFeedComponent implements OnInit, DoCheck
         var random = Math.floor(Math.random() * (this._tweetService.numTweets - 1)) + 1;
         var tweet = tweetInfo[random].text;
         this.feed = this.feed.concat(tweet);
+    }
+
+    addTweets(response: Response)
+    {
+        var tweets = response.json();
+        this.savedTweets = tweets;
+    }
+
+    saveTweet(name: string, tweet:string)
+    {
+        this._tweetService.saveTweet(name, tweet);
+    }
+
+    getSavedTweets()
+    {
+        this._tweetService.getSavedTweets()
+            .subscribe(
+                response => this.addTweets(response),
+                error =>  this.errorMessage = <any>error);
     }
 }

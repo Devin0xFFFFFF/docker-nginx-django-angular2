@@ -2,6 +2,7 @@
 
 # Infrastructure
 Django >= 1.9.4
+django-cors-headers
 
 #Testing
 #fake-factory >= 0.5.7

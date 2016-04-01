@@ -27,10 +27,14 @@ System.register(['angular2/core', "angular2/common", "./tweet.service"], functio
             TwitterFeedComponent = (function () {
                 function TwitterFeedComponent(_tweetService) {
                     this._tweetService = _tweetService;
-                    this.feed = ["1fds", "2sdf"];
+                    this.feed = [];
+                    this.savedTweets = [];
                 }
+                TwitterFeedComponent.prototype.get_token = function () {
+                    return this._tweetService.csrf_token;
+                };
                 TwitterFeedComponent.prototype.ngOnInit = function () {
-                    // this.getHeroes();
+                    this.getSavedTweets();
                 };
                 TwitterFeedComponent.prototype.ngDoCheck = function () {
                     return undefined;
@@ -45,6 +49,18 @@ System.register(['angular2/core', "angular2/common", "./tweet.service"], functio
                     var random = Math.floor(Math.random() * (this._tweetService.numTweets - 1)) + 1;
                     var tweet = tweetInfo[random].text;
                     this.feed = this.feed.concat(tweet);
+                };
+                TwitterFeedComponent.prototype.addTweets = function (response) {
+                    var tweets = response.json();
+                    this.savedTweets = tweets;
+                };
+                TwitterFeedComponent.prototype.saveTweet = function (name, tweet) {
+                    this._tweetService.saveTweet(name, tweet);
+                };
+                TwitterFeedComponent.prototype.getSavedTweets = function () {
+                    var _this = this;
+                    this._tweetService.getSavedTweets()
+                        .subscribe(function (response) { return _this.addTweets(response); }, function (error) { return _this.errorMessage = error; });
                 };
                 TwitterFeedComponent = __decorate([
                     core_1.Component({

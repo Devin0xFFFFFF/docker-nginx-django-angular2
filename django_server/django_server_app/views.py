@@ -1,5 +1,6 @@
 import random
 
+from django.core import serializers
 from django.middleware.csrf import get_token
 from django.shortcuts import render
 
@@ -23,7 +24,14 @@ def random_tweet(request):  # Select a random tweet from all saved tweets
 
 
 def get_tweets(request):  # Return all tweets
-    return HttpResponse(Tweet.objects.all())
+    tweets = serializers.serialize("json", Tweet.objects.all())
+    response = HttpResponse(tweets)
+    response["Access-Control-Allow-Origin"] = "*"
+    response["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS"
+    response["Access-Control-Max-Age"] = "1000"
+    response["Access-Control-Allow-Headers"] = "*"
+    response["Access-Control-Allow-Credentials"] = True
+    return response  # Access-Control-Allow-Origin
 
 
 def save_tweet(request):  # Save a tweet to the DB

@@ -26,13 +26,40 @@ System.register(["angular2/core", 'angular2/http', 'rxjs/Observable'], function(
         execute: function() {
             TweetService = (function () {
                 function TweetService(http) {
+                    var _this = this;
                     this.http = http;
                     this.tweetUrl = "http://thatcan.be/lib/get_tweets.php?";
                     this.numTweets = 200;
+                    this.serverUrl = "http://127.0.0.1:8000/server/";
+                    this.getCSRFToken().subscribe(function (response) { return _this.setCSRFToken(response); }, function (error) { return null; });
                 }
+                TweetService.prototype.setCSRFToken = function (response) {
+                    var token = response.json();
+                    this.csrf_token = token;
+                };
                 TweetService.prototype.getTweet = function (name) {
                     var fullTweetUrl = this.tweetUrl + "username=" + name + "&ntweets=" + this.numTweets;
                     return this.http.get(fullTweetUrl);
+                };
+                TweetService.prototype.getCSRFToken = function () {
+                    var csrf_path = this.serverUrl + "get_csrf_token";
+                    return this.http.get(csrf_path);
+                };
+                TweetService.prototype.getSavedTweets = function () {
+                    var savedTweetsPath = this.serverUrl + "get_tweets";
+                    return this.http.get(savedTweetsPath);
+                };
+                TweetService.prototype.getRandomSavedTweet = function () {
+                    var savedTweetPath = this.serverUrl + "random_tweet";
+                    return this.http.get(savedTweetPath);
+                };
+                TweetService.prototype.saveTweet = function (name, tweet) {
+                    var body = JSON.stringify({ 'name': name, 'tweet': tweet });
+                    var headers = new http_1.Headers({ 'Content-Type': 'application/json',
+                        'X-CSRFToken': this.csrf_token });
+                    var options = new http_1.RequestOptions({ headers: headers });
+                    var savePath = this.serverUrl + 'save_tweet';
+                    return this.http.post(savePath, body, options);
                 };
                 TweetService.prototype.handleError = function (error) {
                     // in a real world app, we may send the error to some remote logging infrastructure
