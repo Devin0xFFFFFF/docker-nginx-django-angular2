@@ -23,7 +23,7 @@ To run this project, you require:
 
 Another option for Windows and Mac users is to install [Docker Toolbox](https://www.docker.com/products/docker-toolbox), an installer to quickly and easily install and setup a Docker environment on your computer. This will give you a lightweight Linux VM to execute Docker on. You can view the ip of this VM by calling 'docker-machine ip'.
 
-####Running The Applciation Stack:
+####Running The Application Stack:
 
 #####Setup:
 
@@ -46,6 +46,10 @@ To enter a container, run 'docker exec -it dockernginx_nginx_1 bash', where 'doc
 Running 'docker-compose kill' will safely kill all Docker project containers
 
 ####Modifying the Application Stack
+
+#####Updating Nginx:
+
+The nginx config files are located in [./nginx/conf](./nginx/conf). All files in this directory will be added to the main nginx file in the container.
 
 #####Creating Migrations:
 
